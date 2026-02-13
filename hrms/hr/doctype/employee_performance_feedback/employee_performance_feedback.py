@@ -19,6 +19,7 @@ class EmployeePerformanceFeedback(Document, AppraisalMixin):
 		self.validate_appraisal()
 		self.validate_total_weightage("feedback_ratings", "Feedback Ratings")
 		self.set_total_score()
+		self.set_sentiment_score()
 
 	def on_submit(self):
 		self.update_avg_feedback_score_in_appraisal()
@@ -52,6 +53,13 @@ class EmployeePerformanceFeedback(Document, AppraisalMixin):
 			total += flt(score)
 
 		self.total_score = flt(total, self.precision("total_score"))
+
+	def set_sentiment_score(self):
+		from hrms.office.ai_assistant import get_sentiment_score
+		# Strip HTML tags from feedback if it's a Text Editor field
+		import re
+		clean_text = re.sub('<[^<]+?>', '', self.feedback or "")
+		self.sentiment_score = get_sentiment_score(clean_text)
 
 	def update_avg_feedback_score_in_appraisal(self):
 		if not self.appraisal:

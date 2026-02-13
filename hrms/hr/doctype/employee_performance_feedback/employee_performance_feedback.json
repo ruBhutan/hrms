@@ -25,6 +25,7 @@
   "appraisal",
   "feedback_ratings",
   "total_score",
+  "sentiment_score",
   "feedback_tab",
   "feedback",
   "amended_from"
@@ -47,6 +48,12 @@
    "fieldtype": "Float",
    "in_list_view": 1,
    "label": "Total Score",
+   "read_only": 1
+  },
+  {
+   "fieldname": "sentiment_score",
+   "fieldtype": "Float",
+   "label": "Sentiment Score (AI)",
    "read_only": 1
   },
   {
